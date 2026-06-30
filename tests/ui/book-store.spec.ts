@@ -6,11 +6,13 @@ test.describe('Book Store Page', () => {
   });
 
   test('should display list of books', async ({ bookStorePage }) => {
+    await bookStorePage.waitForBooksToLoad();
     const bookCount = await bookStorePage.getBookCount();
     expect(bookCount).toBeGreaterThan(0);
   });
 
   test('should filter books by search', async ({ bookStorePage }) => {
+    await bookStorePage.waitForBooksToLoad();
     await bookStorePage.searchBook('JavaScript');
     const titles = await bookStorePage.getBookTitles();
     for (const title of titles) {
@@ -25,6 +27,7 @@ test.describe('Book Store Page', () => {
   });
 
   test('should navigate to book details on click', async ({ bookStorePage, page }) => {
+    await bookStorePage.waitForBooksToLoad();
     const titles = await bookStorePage.getBookTitles();
     expect(titles.length).toBeGreaterThan(0);
     await bookStorePage.clickBook(titles[0]);

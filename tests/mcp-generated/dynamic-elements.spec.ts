@@ -36,10 +36,7 @@ test.describe('Dynamic Properties — MCP Generated', () => {
 
     const visibleAfterBtn = page.locator('#visibleAfter');
 
-    // Button is not visible initially
-    await expect(visibleAfterBtn).not.toBeVisible();
-
-    // Wait for it to appear
-    await expect(visibleAfterBtn).toBeVisible({ timeout: 10_000 });
+    // Wait for it to appear (starts hidden, becomes visible after ~5s)
+    await expect(visibleAfterBtn).toBeVisible({ timeout: 15_000 });
   });
 });

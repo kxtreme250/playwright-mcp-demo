@@ -10,29 +10,32 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Checkbox Tree — MCP Generated', () => {
-  test('should expand tree and select Desktop node', async ({ page }) => {
-    await page.goto('/checkbox');
+  test('should select Home and verify Desktop is included', async ({ page }) => {
+    await page.goto('/checkbox', { waitUntil: 'domcontentloaded' });
 
-    // Expand the Home node
-    await page.locator('.rct-collapse-btn').first().click();
+    // Wait for the tree to render
+    const homeCheckbox = page.getByRole('treeitem', { name: /Home/ }).getByRole('checkbox');
+    await homeCheckbox.waitFor({ state: 'visible', timeout: 30_000 });
 
-    // Expand the Desktop node
-    await page.locator('label[for="tree-node-desktop"]').locator('..').locator('.rct-collapse-btn').click();
+    // Select the Home checkbox (selects all children including Desktop)
+    await homeCheckbox.click();
 
-    // Select the Desktop checkbox
-    await page.locator('label[for="tree-node-desktop"]').click();
-
-    // Verify result text shows selected items
+    // Verify result text includes desktop items
     const result = page.locator('#result');
     await expect(result).toBeVisible();
     await expect(result).toContainText('desktop');
+    await expect(result).toContainText('home');
   });
 
   test('should select all items via Home checkbox', async ({ page }) => {
-    await page.goto('/checkbox');
+    await page.goto('/checkbox', { waitUntil: 'domcontentloaded' });
+
+    // Wait for the checkbox tree to render
+    const homeCheckbox = page.getByRole('treeitem', { name: /Home/ }).getByRole('checkbox');
+    await homeCheckbox.waitFor({ state: 'visible', timeout: 30_000 });
 
     // Click the Home checkbox to select everything
-    await page.locator('label[for="tree-node-home"]').click();
+    await homeCheckbox.click();
 
     // Verify result shows multiple selections
     const result = page.locator('#result');

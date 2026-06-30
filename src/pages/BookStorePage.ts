@@ -19,6 +19,12 @@ export class BookStorePage extends BasePage {
 
   async searchBook(title: string): Promise<void> {
     await this.fillInput(this.searchInput, title);
+    // Wait for the table to update after search
+    await this.page.waitForTimeout(500);
+  }
+
+  async waitForBooksToLoad(): Promise<void> {
+    await this.bookLinks.first().waitFor({ state: 'visible', timeout: 30_000 });
   }
 
   async getBookTitles(): Promise<string[]> {

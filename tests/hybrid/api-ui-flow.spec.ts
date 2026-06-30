@@ -9,6 +9,7 @@ test.describe('API + UI Hybrid Flow', () => {
 
     // Step 2: Navigate to Book Store UI
     await bookStorePage.navigate();
+    await bookStorePage.waitForBooksToLoad();
     const uiBookTitles = await bookStorePage.getBookTitles();
 
     // Step 3: Verify API books are displayed in UI
@@ -26,6 +27,7 @@ test.describe('API + UI Hybrid Flow', () => {
 
     // Step 2: Navigate to book in UI
     await bookStorePage.navigate();
+    await bookStorePage.waitForBooksToLoad();
     await bookStorePage.clickBook(apiResponse.body.title);
 
     // Step 3: Verify details match
@@ -40,6 +42,7 @@ test.describe('API + UI Hybrid Flow', () => {
 
     // Step 2: Search for it in UI
     await bookStorePage.navigate();
+    await bookStorePage.waitForBooksToLoad();
     await bookStorePage.searchBook(firstBook.title);
 
     // Step 3: Verify it appears

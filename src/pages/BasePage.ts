@@ -6,7 +6,7 @@ export abstract class BasePage {
   abstract readonly url: string;
 
   async navigate(): Promise<void> {
-    await this.page.goto(this.url);
+    await this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
   }
 
   async waitForPageLoad(): Promise<void> {
