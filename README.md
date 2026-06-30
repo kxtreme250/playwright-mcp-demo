@@ -30,8 +30,14 @@ playwright-mcp-demo/
 │   ├── api/                    # API-only tests
 │   │   ├── account-api.spec.ts # Account API tests
 │   │   └── bookstore-api.spec.ts # BookStore API tests
-│   └── hybrid/                 # API + UI combined tests
-│       └── api-ui-flow.spec.ts # Cross-layer validation tests
+│   ├── hybrid/                 # API + UI combined tests
+│   │   └── api-ui-flow.spec.ts # Cross-layer validation tests
+│   └── mcp-generated/          # Tests generated via Playwright MCP Server
+│       ├── form-elements.spec.ts     # Text box form submission
+│       ├── checkbox-radio.spec.ts    # Checkbox tree & radio buttons
+│       ├── dynamic-elements.spec.ts  # Dynamic waits & property changes
+│       ├── buttons-interactions.spec.ts # Double/right/dynamic clicks
+│       └── alerts-modals.spec.ts     # Alerts, confirms, prompts & modals
 ├── playwright.config.ts        # Playwright configuration
 ├── tsconfig.json               # TypeScript configuration
 └── package.json                # Dependencies and scripts
@@ -44,6 +50,7 @@ playwright-mcp-demo/
 - **Custom Fixtures** — Dependency injection of page objects and API clients into tests
 - **Hybrid Testing** — API responses validated against UI rendering for cross-layer confidence
 - **Test Data Generation** — Dynamic data creation to avoid test coupling
+- **MCP-Generated Tests** — Sample tests created via Playwright MCP Server + AI prompts, showcasing AI-assisted test authoring
 
 ## Getting Started
 
