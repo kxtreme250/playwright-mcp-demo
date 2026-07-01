@@ -13,7 +13,7 @@ export class BookStorePage extends BasePage {
     super(page);
     this.searchInput = page.locator('#searchBox');
     this.bookList = page.locator('.rt-tbody');
-    this.bookLinks = page.locator('.rt-tbody a');
+    this.bookLinks = page.locator("//div[@class='books-wrapper']//a");
     this.noDataMessage = page.locator('.rt-noData');
   }
 
