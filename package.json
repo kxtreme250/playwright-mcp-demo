@@ -9,15 +9,20 @@
     "test:headed": "npx playwright test --headed",
     "test:debug": "npx playwright test --debug",
     "report": "npx playwright show-report",
-    "lint": "npx tsc --noEmit"
+    "lint": "npx tsc --noEmit && npx eslint .",
+    "lint:eslint": "npx eslint .",
+    "lint:types": "npx tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.0.1",
-    "typescript": "^6.0.3"
+    "eslint": "^10.6.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.1"
   }
 }
