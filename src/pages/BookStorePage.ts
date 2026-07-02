@@ -1,46 +1,53 @@
-import { Page, Locator } from '@playwright/test';
-import { BasePage } from './BasePage';
+import {Page, Locator} from '@playwright/test';
+import {BasePage} from './BasePage';
 
 export class BookStorePage extends BasePage {
-  readonly url = '/books';
+    readonly url = '/books';
 
-  private readonly searchInput: Locator;
-  private readonly bookList: Locator;
-  private readonly bookLinks: Locator;
-  private readonly noDataMessage: Locator;
+    private readonly searchInput: Locator;
+    private readonly bookList: Locator;
+    private readonly bookLinks: Locator;
+    private readonly noDataMessage: Locator;
+    private readonly isbnWrapper: Locator;
 
-  constructor(page: Page) {
-    super(page);
-    this.searchInput = page.locator('#searchBox');
-    this.bookList = page.locator('.rt-tbody');
-    this.bookLinks = page.locator("//div[@class='books-wrapper']//a");
-    this.noDataMessage = page.locator('.rt-noData');
-  }
+    constructor(page: Page) {
+        super(page);
+        this.searchInput = page.locator('#searchBox');
+        this.bookList = page.locator('.rt-tbody');
+        this.bookLinks = page.locator("//div[@class='books-wrapper']//a");
+        this.noDataMessage = page.locator('.rt-noData');
+        this.isbnWrapper = page.locator('#ISBN-wrapper');
+    }
 
-  async searchBook(title: string): Promise<void> {
-    await this.fillInput(this.searchInput, title);
-    // Wait for the table to update after search
-    await this.page.waitForTimeout(500);
-  }
+    async searchBook(title: string): Promise<void> {
+        await this.fillInput(this.searchInput, title);
+        // Wait for the table to update after search
+        await this.page.waitForTimeout(500);
+    }
 
-  async waitForBooksToLoad(): Promise<void> {
-    await this.bookLinks.first().waitFor({ state: 'visible', timeout: 30_000 });
-  }
+    async waitForBooksToLoad(): Promise<void> {
+        await this.bookLinks.first().waitFor({state: 'visible', timeout: 30_000});
+    }
 
-  async getBookTitles(): Promise<string[]> {
-    const titles = await this.bookLinks.allTextContents();
-    return titles.filter((t) => t.trim().length > 0);
-  }
+    async getBookTitles(): Promise<string[]> {
+        const titles = await this.bookLinks.allTextContents();
+        return titles.filter((t) => t.trim().length > 0);
+    }
 
-  async getBookCount(): Promise<number> {
-    return (await this.getBookTitles()).length;
-  }
+    async getBookCount(): Promise<number> {
+        return (await this.getBookTitles()).length;
+    }
 
-  async clickBook(title: string): Promise<void> {
-    await this.page.locator(`a:has-text("${title}")`).click();
-  }
+    async clickBook(title: string): Promise<void> {
+        await this.page.locator(`a:has-text("${title}")`).click();
+    }
 
-  async isNoDataVisible(): Promise<boolean> {
-    return this.isVisible(this.noDataMessage);
-  }
+    async isNoDataVisible(): Promise<boolean> {
+        return this.isVisible(this.noDataMessage);
+    }
+
+    async isBookDetailVisible(): Promise<boolean> {
+        await this.isbnWrapper.waitFor({state: 'visible', timeout: 30_000})
+        return this.isbnWrapper.isVisible();
+    }
 }

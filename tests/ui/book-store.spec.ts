@@ -26,11 +26,12 @@ test.describe('Book Store Page', () => {
     expect(bookCount).toBe(0);
   });
 
-  test('should navigate to book details on click', async ({ bookStorePage, page }) => {
+  test('should navigate to book details on click', async ({ bookStorePage }) => {
     await bookStorePage.waitForBooksToLoad();
     const titles = await bookStorePage.getBookTitles();
     expect(titles.length).toBeGreaterThan(0);
     await bookStorePage.clickBook(titles[0]);
-    await expect(page.locator('#ISBN-wrapper')).toBeVisible();
+    const isDetailVisible = await bookStorePage.isBookDetailVisible();
+    expect(isDetailVisible).toBe(true);
   });
 });

@@ -10,6 +10,7 @@ export class LoginPage extends BasePage {
   private readonly errorMessage: Locator;
   private readonly logoutButton: Locator;
   private readonly usernameDisplay: Locator;
+  private readonly newUserButton: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -19,6 +20,7 @@ export class LoginPage extends BasePage {
     this.errorMessage = page.locator('#name');
     this.logoutButton = page.locator('#submit[value="Log out"]');
     this.usernameDisplay = page.locator('#userName-value');
+    this.newUserButton = page.locator('#newUser');
   }
 
   async login(username: string, password: string): Promise<void> {
@@ -41,5 +43,17 @@ export class LoginPage extends BasePage {
 
   async logout(): Promise<void> {
     await this.clickElement(this.logoutButton);
+  }
+
+  async isLoginFormVisible(): Promise<boolean> {
+    return (
+      (await this.isVisible(this.usernameInput)) &&
+      (await this.isVisible(this.passwordInput)) &&
+      (await this.isVisible(this.loginButton))
+    );
+  }
+
+  async clickNewUser(): Promise<void> {
+    await this.clickElement(this.newUserButton);
   }
 }
