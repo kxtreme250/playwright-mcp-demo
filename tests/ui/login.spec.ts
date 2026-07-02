@@ -5,7 +5,7 @@ test.describe('Login Page', () => {
     await loginPage.navigate();
   });
 
-  test('should display login form', async ({ loginPage, page }) => {
+  test('should display login form', async ({ page }) => {
     await expect(page.locator('#userName')).toBeVisible();
     await expect(page.locator('#password')).toBeVisible();
     await expect(page.locator('#login')).toBeVisible();
