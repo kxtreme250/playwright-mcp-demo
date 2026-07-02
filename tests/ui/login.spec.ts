@@ -5,10 +5,9 @@ test.describe('Login Page', () => {
     await loginPage.navigate();
   });
 
-  test('should display login form', async ({ page }) => {
-    await expect(page.locator('#userName')).toBeVisible();
-    await expect(page.locator('#password')).toBeVisible();
-    await expect(page.locator('#login')).toBeVisible();
+  test('should display login form', async ({ loginPage }) => {
+    const isVisible = await loginPage.isLoginFormVisible();
+    expect(isVisible).toBe(true);
   });
 
   test('should show error for invalid credentials', async ({ loginPage }) => {
@@ -17,8 +16,8 @@ test.describe('Login Page', () => {
     expect(errorMessage).toBeTruthy();
   });
 
-  test('should navigate to registration page', async ({ page }) => {
-    await page.locator('#newUser').click();
+  test('should navigate to registration page', async ({ loginPage, page }) => {
+    await loginPage.clickNewUser();
     await expect(page).toHaveURL(/.*register/);
   });
 });
